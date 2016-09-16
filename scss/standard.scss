@@ -91,6 +91,22 @@ $body_background_color: white;  // snake_case
     @extend .message;
 }
 
+
+// Control structures
+
+@mixin does-parent-exist {
+    @if & {
+        &:hover {
+            color: red;
+        }
+    } @else {
+        a {
+            color: red;
+        }
+    }
+}
+
+
 // Operators
 
 .container { width: 100%; }
