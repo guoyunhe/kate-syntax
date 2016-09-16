@@ -565,8 +565,23 @@ Changelog:
             <item> topline </item>
         </list>
 
-        <list name="types">
+        <list name="values">
+            <!-- CSS values from https://www.w3.org/TR/css-values/ -->
+            <!-- CSS-wide keywords -->
+            <item> initial </item>
             <item> inherit </item>
+            <item> unset </item>
+
+            <!-- Position values -->
+            <item> left </item>
+            <item> right </item>
+            <item> top </item>
+            <item> bottom </item>
+            <item> center </item>
+            <item> middle </item>
+            <item> at </item>
+            <item> to </item>
+
             <item> none </item>
             <item> hidden </item>
             <item> dotted </item>
@@ -594,15 +609,6 @@ Changelog:
             <item> bolder </item>
             <item> lighter </item>
             <item> light </item>
-            <item> 100 </item>
-            <item> 200 </item>
-            <item> 300 </item>
-            <item> 400 </item>
-            <item> 500 </item>
-            <item> 600 </item>
-            <item> 700 </item>
-            <item> 800 </item>
-            <item> 900 </item>
             <item> transparent </item>
             <item> repeat </item>
             <item> repeat-x </item>
@@ -810,19 +816,24 @@ Changelog:
 
         <list name="functions">
             <!-- CSS functions -->
-            <item> url </item>
             <item> attr </item>
-            <item> rect </item>
-            <item> rgb </item>
-            <item> rgba </item>
-            <item> hsl </item>
-            <item> hsla </item>
+            <item> calc </item>
             <item> counter </item>
             <item> counters </item>
-
-            <!-- in @font-face -->
-            <item> local </item>
             <item> format </item>
+            <item> hsl </item>
+            <item> hsla </item>
+            <item> image </item>
+            <item> linear-gradient </item>
+            <item> local </item>
+            <item> radial-gradient </item>
+            <item> rect </item>
+            <item> repeating-linear-gradient </item>
+            <item> repeating-radial-gradient </item>
+            <item> rgb </item>
+            <item> rgba </item>
+            <item> toggle </item>
+            <item> url </item>
 
             <!-- Trident (a.k.a., MSHTML) rendering engine functional notation extensions -->
             <item> expression </item>
@@ -1039,7 +1050,7 @@ Changelog:
                 <RegExpr attribute="Annotation" context="#stay" String="!important\b" />
                 <RegExpr attribute="Annotation" context="#stay" String="!default\b" />
                 <IncludeRules context="FindVariables" />
-                <keyword attribute="Value" context="#stay" String="types" />
+                <keyword attribute="Value" context="#stay" String="values" />
                 <keyword attribute="Value" context="#stay" String="colors" />
                 <RegExpr attribute="Value" context="#stay" String="#([0-9A-Fa-f]{3}){1,4}\b" />
                 <RegExpr attribute="Value" context="#stay" String="[-+]?[0-9.]+(em|rem|ex|px|in|cm|mm|pt|pc|deg|rad|grad|ms|s|Hz|kHz)\b" />
