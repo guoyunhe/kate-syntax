@@ -24,8 +24,9 @@
     <WordDetect attribute="Element" context="CSS" String="&lt;style" insensitive="true" beginRegion="style" />
     <WordDetect attribute="Element" context="JS" String="&lt;script" insensitive="true" beginRegion="script" />
     <!-- HTML void elements, like <br> https://www.w3.org/TR/html5/syntax.html#elements-0 -->
-    <RegExpr attribute="Element" context="El Void Open" String="&lt;&voidtag;" />
-    <keyword attribute="Element" context="#stay" String="&lt;/&voidtag;&gt;" />
+    <RegExpr attribute="Element" context="El Void" String="&lt;&voidtag;" />
+    <!-- Void elements should not have end tag like </br> -->
+    <RegExpr attribute="Error" context="#stay" String="&lt;/&voidtag;&gt;" />
     <!-- Normal elements, like <some></some> or <some/> -->
     <RegExpr attribute="Element" context="El Open" String="&lt;&name;" beginRegion="element" />
     <RegExpr attribute="Element" context="El Close" String="&lt;/&name;" />
@@ -103,7 +104,7 @@
     <IncludeRules context="FindPEntityRefs" />
   </context>
 
-  <context name="El Void Open" attribute="Other Text" lineEndContext="#stay">
+  <context name="El Void" attribute="Other Text" lineEndContext="#stay">
     <Detect2Chars attribute="Element" context="#pop" char="/" char1="&gt;" />
     <DetectChar attribute="Element" context="#pop" char="&gt;" />
     <IncludeRules context="FindAttributes" />
