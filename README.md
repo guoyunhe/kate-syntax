@@ -10,3 +10,9 @@ syntax for web programming languages.
   - Smarty
   - Twig
   - Blade
+
+Use PHP as XML generators. It save a lot of efforts. For example, CSS, SaSS and
+LESS share a lot of properties; PHP is a superset of HTML.
+
+Syntax highlighting files will be pushed into official Kate repository when they
+are ready.

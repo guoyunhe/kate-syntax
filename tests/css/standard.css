@@ -9,10 +9,18 @@
  */
 
 /*
- * Block comment
+ * Comment
  *
- * Alert keywords:
- * TODO BUG FIXME
+ * C style comment. This should be the only comment style supported by CSS.
+ *
+ * Alert keywords should be colored.
+ *
+ * NOTE TODO BUG FIXME WARNING DANGER
+ *
+ * URLs should be styled as link
+ *
+ * https://www.kde.org/
+ *
  */
 
 @charset "UTF-8";
@@ -30,6 +38,7 @@ html, body {
     background: #fff000;
     text-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
     box-sizing: border-box;
+    -moz-box-sizing: border-box;
 }
 
 
@@ -51,7 +60,8 @@ sidebar #subscribe .subscribe_form input[type="text"] {
     font-size: 20px;
 }
 
-sidebar #subscribe .subscribe_form:nth-child(2n + 1):hover input[class*="small-"] {
+sidebar #subscribe .subscribe_form:nth-child(2n + 1):hover
+input[class*="small-"] {
     font-weight: bold;
 }
 
@@ -92,17 +102,26 @@ sidebar #subscribe .subscribe_form:nth-child(2n + 1):hover input[class*="small-"
 @keyframes slidein {
     from {
         margin-left: 100%;
-        width: 300%;
+        width: 300px;
+    }
+
+    50% {
+        margin-left: 50%;
+        width: 200px;
     }
 
     to {
         margin-left: 0%;
-        width: 100%;
+        width: 100px;
     }
 }
 
 
-/* Region markers */
+/*
+ * Region markers
+ *
+ * Mark the beginning and end of region and make region foldable.
+ */
 
 /*BEGIN Comment */
 

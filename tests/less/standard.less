@@ -1,0 +1,214 @@
+/*
+ * LESS Syntax Highlight Sample File (Standard)
+ *
+ * Made from examples on http://lesscss.org/features/
+ *
+ * @author  Guo Yunhe guoyunhebrave@gmail.com
+ * @date    2016-09-16
+ */
+
+/*
+ * Comments
+ *
+ * C style comment.
+ *
+ * Alert keywords should be colored.
+ *
+ * NOTE TODO BUG FIXME WARNING DANGER
+ *
+ * URLs should be styled as link
+ *
+ * https://www.kde.org/
+ *
+ */
+
+// LESS extended comment syntax
+
+@charset "UTF-8";
+
+// LESS import syntax
+@import "this-is-valid.less";
+
+// Variables
+@link-color:        #428bca; // sea blue
+@link-color-hover:  darken(@link-color, 10%);
+
+a,
+.link {
+  color: @link-color;
+}
+a:hover {
+  color: @link-color-hover;
+}
+.widget {
+  color: #fff;
+  background: @link-color;
+}
+
+// Nested rules
+#header {
+  color: black;
+  .navigation {
+    font-size: 12px;
+  }
+  .logo {
+    width: 300px;
+  }
+}
+
+
+// Mixins
+
+.bordered {
+  border-top: dotted 1px black;
+  border-bottom: solid 2px black;
+}
+
+#menu a {
+  color: #111;
+  .bordered;
+}
+
+.post a {
+  color: red;
+  .bordered;
+}
+
+
+// Nested Directives and Bubbling
+
+.screen-color {
+  @media screen {
+    color: green;
+    @media (min-width: 768px) and (max-width: 1200px) {
+      color: red;
+    }
+  }
+  @media tv {
+    color: black;
+  }
+}
+
+#a {
+  color: blue;
+  @font-face {
+    src: made-up-url;
+  }
+
+  padding: 2 2 2 2;
+}
+
+
+// Operations
+
+// numbers are converted into the same units
+@conversion-1: 5cm + 10mm; // result is 6cm
+@conversion-2: 2 - 3cm - 5mm; // result is -1.5cm
+
+// conversion is impossible
+@incompatible-units: 2 + 5px - 3cm; // result is 4px
+
+// example with variables
+@base: 5%;
+@filler: @base * 2; // result is 10%
+@other: @base + @filler; // result is 15%
+
+@base: 2cm * 3mm; // result is 6cm
+
+@color: #224488 / 2; //results in #112244
+background-color: #112244 + #111; // result is #223355
+
+
+// Escaping
+
+.weird-element {
+  content: ~"^//* some horrible but needed \" css hack";
+}
+
+
+// Functions
+
+@base: #f04615;
+@width: 0.5;
+
+.class {
+  width: percentage(@width); // returns `50%`
+  color: saturate(@base, 5%);
+  background-color: spin(lighten(@base, 25%), 8);
+}
+
+
+// Namespaces and Accessors
+
+#bundle {
+  .button {
+    display: block;
+    border: 1px solid black;
+    background-color: grey;
+    &:hover {
+      background-color: white
+    }
+  }
+  .tab { ... }
+  .citation { ... }
+}
+
+#header a {
+  color: orange;
+  #bundle > .button;
+  font-family: "Open Sans", sans-serif;
+}
+
+
+// Variable Interpolation
+
+.@{my-selector} {
+  font-weight: bold;
+  line-height: 40px;
+  margin: 0 auto;
+}
+
+body {
+  color: #444;
+  background: url("@{images}/white-sand.png");
+}
+
+@import "@{themes}/tidal-wave.less";
+
+/*
+ * NOTE Interpolations in property name is supported by LESS. But it is rarely
+ * used. So currently we won't support the highlight. It may look wired in Kate,
+ * because Kate treat it as selector interpolations or variable definations.
+ */
+.widget {
+  @{property}: #0ee;
+  background-@{property}: #999;
+}
+
+footer {
+    @fnord:  "I am fnord.";
+    @var:    "fnord";
+    content: @@var;
+}
+
+
+// Extend Syntax
+
+.a:extend(.b) {}
+
+// the above block does the same thing as the below block
+.a {
+  &:extend(.b);
+}
+
+.c:extend(.d all) {
+  // extends all instances of ".d" e.g. ".x.d" or ".d.x"
+}
+.c:extend(.d) {
+  // extends only instances where the selector will be output as just ".d"
+}
+
+.some-class:extend(.bucket tr) {} // nested ruleset is recognized
+.child:extend(:nth-child(n+3)) {}
+.doubleQuote:extend([title="identifier"]) {}
+

@@ -12,7 +12,7 @@
 
 /*
  * .class-selector #id "string" 'comment' // comment {} [] ()  /* comment
- * TODO BUG DEBUG
+ * TODO BUG NOTE WARNING DANGER
  * body {
  *    margin: 0 !important;
  * }
@@ -42,7 +42,7 @@ pre.primary:hover.large:nth-child(2n-1){font-size:17px;font-family:"Noto Sans";-
 
 /* With unnecessary breaklines and spaces */
 
-blockquote .ref
+blockquote .ref_author
     {
              flex : 0 1 30%;
         flex-wrap : wrap;
