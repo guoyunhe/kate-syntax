@@ -1,0 +1,72 @@
+doctype html
+html(lang="en")
+  head
+    title= pageTitle
+    script(type='text/javascript').
+      if (foo) bar(1 + 5)
+  body
+    h1 Pug - node template engine
+    #container.col
+      if youAreUsingPug
+        p You are amazing
+      else
+        p Get on it!
+      p.
+        Pug is a terse and simple templating language with a
+        strong focus on performance and powerful features.
+
+    //- Attributes
+    //- https://pugjs.org/language/attributes.html
+
+    a(href='google.com') Google
+    |
+    |
+    a(class='button' href='google.com') Google
+    |
+    |
+    a(class='button', href='google.com') Google
+
+    - var authenticated = true
+    body(class=authenticated ? 'authed' : 'anon')
+
+    input(
+      type='checkbox'
+      name='agreement'
+      checked
+    )
+
+    input(data-json=`
+      {
+        "very-long": "piece of ",
+        "data": true
+      }
+    `)
+
+    div(class='div-class', (click)='play()')
+    div(class='div-class' '(click)'='play()')
+
+    - var url = 'pug-test.html';
+    a(href='/' + url) Link
+    |
+    |
+    - url = 'https://example.com/'
+    a(href=url) Another link
+
+    //- Class Literal
+
+    a.button
+    .button
+
+    //- ID Literal
+
+    a#main-link
+    #main-link
+
+    //- &attributes
+
+    div#foo(data-bar="foo")&attributes({'data-foo': 'bar'})
+
+    - var attributes = {};
+    - attributes.class = 'baz';
+    div#foo(data-bar="foo")&attributes(attributes)
+
