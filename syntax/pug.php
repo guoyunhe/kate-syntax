@@ -20,9 +20,25 @@ Version 1 - Guo Yunhe guoyunhebrave@gmail.com - 2017-04-14
           extensions="*.pug;*.jade" mimetype="text/plain" priority="10"
           author="Guo Yunhe (guoyunhebrave@gmail.com)" license="LGPL">
 <highlighting>
+<list name="controlflow">
+    <item> case </item>
+    <item> when </item>
+    <item> default </item>
+    <item> if </item>
+    <item> unless </item>
+    <item> else if </item>
+    <item> else </item>
+    <item> each </item>
+    <item> while </item>
+</list>
 <contexts>
     <context name="Start" attribute="Normal Text" lineEndContext="#stay">
         <Detect2Chars attribute="Comment" context="Comment" char="/" char1="/" />
+        <StringDetect attribute="ControlFlow" context="Case" String="when" firstNonSpace="true" />
+        <StringDetect attribute="ControlFlow" context="Case" String="default" firstNonSpace="true" />
+        <StringDetect attribute="ControlFlow" context="EachIn" String="each" firstNonSpace="true" />
+        <StringDetect attribute="ControlFlow" context="EachIn" String="for" firstNonSpace="true" />
+        <keyword attribute="ControlFlow" context="JavaScript" String="controlflow" firstNonSpace="true" />
         <DetectIdentifier attribute="Normal Text"  context="Element" firstNonSpace="true" lookAhead="true" />
         <DetectChar attribute="Normal Text" context="Element" char="#" firstNonSpace="true" lookAhead="true" />
         <DetectChar attribute="Normal Text" context="Element" char="." firstNonSpace="true" lookAhead="true" />
@@ -30,18 +46,19 @@ Version 1 - Guo Yunhe guoyunhebrave@gmail.com - 2017-04-14
         <DetectChar attribute="Normal Text" context="#stay" char="|" firstNonSpace="true" />
     </context>
 
-    <context name="FindEntityRefs" attribute="Normal Text" lineEndContext="#stay">
-        <RegExpr attribute="EntityRef" context="#stay" String="&entity;" />
+    <context name="FindEntities" attribute="Normal Text" lineEndContext="#stay">
+        <RegExpr attribute="Entity" context="#stay" String="&entity;" />
         <AnyChar attribute="Error" context="#stay" String="&amp;&lt;" />
     </context>
 
     <context name="Element" attribute="Normal Text" lineEndContext="#pop">
-        <DetectChar attribute="Normal Text" context="Text" char=" " />
         <RegExpr attribute="Element" context="#stay" String="&name;" />
         <RegExpr attribute="ID" context="#stay" String="#&name;" />
         <RegExpr attribute="Class" context="#stay" String="\.&name;" />
         <DetectChar attribute="Normal Text" context="Attributes" char="(" />
         <StringDetect attribute="Normal Text" context="AttributeObject" String="&amp;attributes(" />
+        <RegExpr attribute="Normal Text" context="Element" String=":\s+" />
+        <DetectChar attribute="Normal Text" context="Text" char=" " />
     </context>
 
     <context name="Attributes" attribute="Normal Text" lineEndContext="#stay">
@@ -69,10 +86,19 @@ Version 1 - Guo Yunhe guoyunhebrave@gmail.com - 2017-04-14
 
     <context name="Text" attribute="Normal Text" lineEndContext="#pop">
         <DetectSpaces />
+        <IncludeRules context="FindEntities" includeAttrib="true"/>
     </context>
 
     <context name="JavaScript" attribute="Normal Text" lineEndContext="#pop">
         <IncludeRules context="Normal##JavaScript" includeAttrib="true"/>
+    </context>
+
+    <context name="Case" attribute="Normal Text" lineEndContext="#pop">
+        <RegExpr attribute="Normal Text" context="Element" String=":\s+" />
+    </context>
+
+    <context name="EachIn" attribute="Normal Text" lineEndContext="#pop">
+        <StringDetect attribute="ControlFlow" context="JavaScript" char="in" />
     </context>
 
     <context name="Comment" attribute="Comment" lineEndContext="#pop">
@@ -80,8 +106,7 @@ Version 1 - Guo Yunhe guoyunhebrave@gmail.com - 2017-04-14
     </context>
 </contexts>
 <itemDatas>
-    <itemData name="Normal Text" defStyleNum="dsNormal" />
-    <itemData name="Comment" defStyleNum="dsComment" />
+    <?php require('javascript-styles.php') ?>
     <itemData name="CDATA" defStyleNum="dsBaseN" bold="1" spellChecking="false" />
     <itemData name="Processing Instruction" defStyleNum="dsKeyword" spellChecking="false" />
     <itemData name="Doctype" defStyleNum="dsDataType" bold="1" spellChecking="false" />
@@ -90,12 +115,7 @@ Version 1 - Guo Yunhe guoyunhebrave@gmail.com - 2017-04-14
     <itemData name="ID" defStyleNum="dsPreprocessor" spellChecking="false" />
     <itemData name="Class" defStyleNum="dsFunction" spellChecking="false" />
     <itemData name="Attribute" defStyleNum="dsAttribute" spellChecking="false" />
-    <itemData name="Value" defStyleNum="dsString" spellChecking="false" />
-
-    <itemData name="EntityRef" defStyleNum="dsDecVal" spellChecking="false" />
-    <itemData name="PEntityRef" defStyleNum="dsDecVal" spellChecking="false" />
-
-    <itemData name="Error" defStyleNum="dsError" spellChecking="false" />
+    <itemData name="Entity" defStyleNum="dsDecVal" spellChecking="false" />
 </itemDatas>
 </highlighting>
 <general>
