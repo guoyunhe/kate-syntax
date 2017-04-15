@@ -34,16 +34,18 @@ Version 1 - Guo Yunhe guoyunhebrave@gmail.com - 2017-04-14
 <contexts>
     <context name="Start" attribute="Normal Text" lineEndContext="#stay">
         <Detect2Chars attribute="Comment" context="Comment" char="/" char1="/" />
-        <StringDetect attribute="ControlFlow" context="Case" String="when" firstNonSpace="true" />
-        <StringDetect attribute="ControlFlow" context="Case" String="default" firstNonSpace="true" />
-        <StringDetect attribute="ControlFlow" context="EachIn" String="each" firstNonSpace="true" />
-        <StringDetect attribute="ControlFlow" context="EachIn" String="for" firstNonSpace="true" />
+        <StringDetect attribute="Doctype" context="#stay" String="doctype" insensitive="true" />
         <keyword attribute="ControlFlow" context="JavaScript" String="controlflow" firstNonSpace="true" />
         <DetectIdentifier attribute="Normal Text"  context="Element" firstNonSpace="true" lookAhead="true" />
         <DetectChar attribute="Normal Text" context="Element" char="#" firstNonSpace="true" lookAhead="true" />
         <DetectChar attribute="Normal Text" context="Element" char="." firstNonSpace="true" lookAhead="true" />
         <DetectChar attribute="Normal Text" context="JavaScript" char="-" firstNonSpace="true" />
         <DetectChar attribute="Normal Text" context="#stay" char="|" firstNonSpace="true" />
+    </context>
+
+    <context name="FindInterpolation" attribute="Normal Text" lineEndContext="#stay">
+        <Detect2Chars attribute="Interpolation" context="JavaScript" char="#" char1="{" />
+        <DetectChar attribute="Interpolation" context="#stay" char="}" />
     </context>
 
     <context name="FindEntities" attribute="Normal Text" lineEndContext="#stay">
@@ -58,12 +60,12 @@ Version 1 - Guo Yunhe guoyunhebrave@gmail.com - 2017-04-14
         <DetectChar attribute="Normal Text" context="Attributes" char="(" />
         <StringDetect attribute="Normal Text" context="AttributeObject" String="&amp;attributes(" />
         <RegExpr attribute="Normal Text" context="Element" String=":\s+" />
+        <RegExpr attribute="Normal Text" context="JavaScript" String="=\s+" />
         <DetectChar attribute="Normal Text" context="Text" char=" " />
     </context>
 
     <context name="Attributes" attribute="Normal Text" lineEndContext="#stay">
-        <RegExpr attribute="Attribute" context="Attribute" String="&name;" />
-        <RegExpr attribute="Attribute" context="Attribute" String="\(&name;\)" />
+        <RegExpr attribute="Attribute" context="Attribute" String="(&name;|\(&name;\))" />
         <DetectChar attribute="Normal Text" context="#pop" char=")" />
     </context>
 
@@ -73,32 +75,26 @@ Version 1 - Guo Yunhe guoyunhebrave@gmail.com - 2017-04-14
     </context>
 
     <context name="Attribute" attribute="Attribute" lineEndContext="#pop">
-        <DetectChar attribute="Normal Text" context="#pop" char="," />
-        <DetectChar attribute="Normal Text" context="#pop#pop" char=")" />
+        <AnyChar attribute="Normal Text" context="#pop" String=",)" lookAhead="true" />
+        <RegExpr attribute="Attribute" context="#pop" String="\s+(&name;|\(&name;\))(=|\s|\))" lookAhead="true" />
         <DetectChar attribute="Attribute" context="Value" char="=" />
     </context>
 
     <context name="Value" attribute="Normal Text" lineEndContext="#pop">
-        <DetectChar attribute="Normal Text" context="#pop#pop" char="," />
-        <DetectChar attribute="Normal Text" context="#pop#pop#pop" char=")" />
+        <AnyChar attribute="Normal Text" context="#pop" String=",)" lookAhead="true" />
+        <RegExpr attribute="Attribute" context="#pop" String="\s+(&name;|\(&name;\))(=|\s|\))" lookAhead="true" />
         <IncludeRules context="Normal##JavaScript" includeAttrib="true"/>
     </context>
 
     <context name="Text" attribute="Normal Text" lineEndContext="#pop">
         <DetectSpaces />
         <IncludeRules context="FindEntities" includeAttrib="true"/>
+        <IncludeRules context="FindInterpolation" includeAttrib="true"/>
     </context>
 
     <context name="JavaScript" attribute="Normal Text" lineEndContext="#pop">
         <IncludeRules context="Normal##JavaScript" includeAttrib="true"/>
-    </context>
-
-    <context name="Case" attribute="Normal Text" lineEndContext="#pop">
-        <RegExpr attribute="Normal Text" context="Element" String=":\s+" />
-    </context>
-
-    <context name="EachIn" attribute="Normal Text" lineEndContext="#pop">
-        <StringDetect attribute="ControlFlow" context="JavaScript" char="in" />
+        <AnyChar attribute="Normal Text" context="#pop" String=",)}:" lookAhead="true" />
     </context>
 
     <context name="Comment" attribute="Comment" lineEndContext="#pop">
@@ -116,6 +112,7 @@ Version 1 - Guo Yunhe guoyunhebrave@gmail.com - 2017-04-14
     <itemData name="Class" defStyleNum="dsFunction" spellChecking="false" />
     <itemData name="Attribute" defStyleNum="dsAttribute" spellChecking="false" />
     <itemData name="Entity" defStyleNum="dsDecVal" spellChecking="false" />
+    <itemData name="Interpolation" defStyleNum="dsPreprocessor" spellChecking="false" />
 </itemDatas>
 </highlighting>
 <general>

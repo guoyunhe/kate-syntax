@@ -43,7 +43,7 @@ html(lang="en")
     `)
 
     div(class='div-class', (click)='play()')
-    div(class='div-class' '(click)'='play()')
+    div(class='div-class' (click)='play()' hidden) hello #{ username }
 
     - var url = 'pug-test.html';
     a(href='/' + url) Link
@@ -64,7 +64,10 @@ html(lang="en")
 
     //- &attributes
 
-    div#foo(data-bar="foo")&attributes({'data-foo': 'bar'})
+    div#foo(data-bar="foo")&attributes({
+      foo: 'bar',
+      'data-foo': 'bar'
+    })
 
     - var attributes = {};
     - attributes.class = 'baz';
@@ -87,3 +90,62 @@ html(lang="en")
       when 0: p you have no friends
       when 1: p you have a friend
       default: p you have #{friends} friends
+
+
+    //- Code
+    //- https://pugjs.org/language/code.html
+
+    - for (var x = 0; x < 3; x++)
+      li item
+
+    - var list = ["Uno", "Dos", "Tres", "Cuatro", "Cinco", "Seis"]
+    each item in list
+      li= item
+
+    p= 'This code is' + ' <escaped>!'
+
+    p!= 'This code is' + ' <strong>not</strong> escaped!'
+
+
+    //- Comments
+    //- https://pugjs.org/language/comments.html
+
+    // just some paragraphs
+    p foo
+    p bar
+
+    //- will not output within markup
+    p foo
+    p bar
+
+    //- TODO Block Comments
+
+    body
+      //-
+        Comments for your template writers.
+        Use as much text as you want.
+      //
+        Comments for your HTML readers.
+        Use as much text as you want.
+
+
+    //- Conditionals
+    //- https://pugjs.org/language/conditionals.html
+
+    - var user = { description: 'foo bar baz' }
+    - var authorised = false
+    #user
+      if user.description
+        h2.green Description
+        p.description= user.description
+      else if authorised
+        h2.blue Description
+        p.description.
+          User has no description,
+          why not add one...
+      else
+        h2.red Description
+        p.description User has no description
+
+    unless user.isAnonymous
+      p You're logged in as #{user.name} now
