@@ -17,7 +17,7 @@ Version 1 - Guo Yunhe guoyunhebrave@gmail.com - 2017-04-14
 
 -->
 <language name="Pug" version="1" kateversion="5.0" section="Markup"
-          extensions="*.pug;*.jade" mimetype="text/plain" priority="10"
+          extensions="*.pug;*.jade" mimetype="" priority="10"
           author="Guo Yunhe (guoyunhebrave@gmail.com)" license="LGPL">
 <highlighting>
 <list name="controlflow">
