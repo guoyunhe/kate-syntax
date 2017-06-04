@@ -1,1 +1,31 @@
- 
+/*
+ * Stylus Syntax Highlight Sample File (Standard)
+ *
+ * @author  Guo Yunhe guoyunhebrave@gmail.com
+ * @date    2017-06-03
+ */
+
+border-radius()
+  -webkit-border-radius: arguments
+  -moz-border-radius: arguments
+  border-radius: arguments
+
+body
+  font: 12px Helvetica, Arial, sans-serif
+
+a.button
+  border-radius(5px)
+
+sum(nums...)
+  sum = 0
+  sum += n for n in nums
+
+sum(1 2 3 4)
+// => 10
+
+fonts = helvetica, arial, sans-serif
+
+body {
+  padding: 50px;
+  font: 14px/1.4 fonts;
+}
